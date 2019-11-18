@@ -1,3 +1,4 @@
+
 package com.bruno.appquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ConstraintLayout tela;
     private TextView tvPergunta,tvNumero,tvSim,tvNao,tvResposta;
-    private int contador ,acertou;
+    private int count,acertos;
 
     Pergunta perguntas[];
 
@@ -27,36 +28,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        contador =-1;
-        acertou=0;
+        
         tvResposta = findViewById(R.id.tvresposta);
         tvSim=findViewById(R.id.tvsim);
         tvNao=findViewById(R.id.tvnao);
         tvPergunta = findViewById(R.id.tvPergunta);
         tvNumero = findViewById(R.id.tvnumero);
         tela = findViewById(R.id.tela);
+	count =-1;
+        acertos=0;
+              
+
 
         perguntas = new Pergunta[5];
 
-         Pergunta pergunta = new Pergunta("Brasil é um país da America?",true);
+        Pergunta pergunta = new Pergunta("Brasil é um país da America?",true);
+	Pergunta pergunta1 = new Pergunta("Brasil ganhou a última Copa do Mundo?",false);
+	Pergunta pergunta2 = new Pergunta("Gato é um mamífero?",true);
+	Pergunta pergunta3 = new Pergunta("São Paulo é um Estado do Sul?",false);
+ 	Pergunta pergunta4 = new Pergunta("EUA é o maior campeão das Olimpiadas?",true);
 
         perguntas[0]=pergunta;
-
-        Pergunta pergunta1 = new Pergunta("Brasil ganhou a última Copa do Mundo?",false);
-
-        perguntas[1]=pergunta1;
-
-        Pergunta pergunta2 = new Pergunta("Gato é um mamífero?",true);
-
-        perguntas[2]=pergunta2;
-
-        Pergunta pergunta3 = new Pergunta("São Paulo é um Estado do Sul?",false);
-
-        perguntas[3]=pergunta3;
-
-        Pergunta pergunta4 = new Pergunta("EUA é o maior campeão das Olimpiadas?",true);
-
-        perguntas[4]=pergunta4;
+	perguntas[1]=pergunta1;
+	perguntas[2]=pergunta2;
+	perguntas[3]=pergunta3;
+	perguntas[4]=pergunta4;
 
 
 
@@ -67,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
                 super.onSwipeBottom();
 
-                perguntas[contador].setResposta(false);
+                perguntas[count].setResposta(false);
                 tvNao.setText("Não");
                 tvSim.setText("");
 
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                perguntas[contador].setResposta(true);
+                perguntas[count].setResposta(true);
 
                 tvSim.setText("Sim");
                 tvNao.setText("");
@@ -90,27 +86,31 @@ public class MainActivity extends AppCompatActivity {
             public void onSwipeLeft() {
 
                 super.onSwipeLeft();
-                if(contador<4){
-                    contador++;
+
+              
+
+
+                if(count<total_perguntas){
+                    count++;
                 }else{
 
                     tvPergunta.setText("");
                     tvNao.setText("");
                     tvSim.setText("");
-                    for (int i=0 ;i<4;i++){
-                        if (perguntas[i].getRespostacerta()==perguntas[i].getResposta()){
-                            acertou++;
+                    for (int j=0 ;j<total_perguntas;j++){
+                        if (perguntas[j].getRespostacerta()==perguntas[j].getResposta()){
+                            acertos++;
 
 
                     }
                     }
-                    tvResposta.setText("Você acertou "+acertou);
+                    tvResposta.setText("Acertos: "+acertos);
 
-                    acertou=0;
+                    acertos=0;
 
                 }
-                tvNumero.setText(String.valueOf(contador));
-                tvPergunta.setText(perguntas[contador].getPergunta());
+                tvNumero.setText(String.valueOf(count));
+                tvPergunta.setText(perguntas[count].getPergunta());
                 tvNao.setText("");
                 tvSim.setText("");
 
@@ -122,12 +122,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                 super.onSwipeRight();
-                if(contador>0){
-                    contador--;
+                if(count>0){
+                    count--;
                 }
 
-                tvNumero.setText(String.valueOf(contador));
-                tvPergunta.setText(perguntas[contador].getPergunta());
+                tvNumero.setText(String.valueOf(count));
+                tvPergunta.setText(perguntas[count].getPergunta());
                 tvNao.setText("");
                 tvSim.setText("");
 
